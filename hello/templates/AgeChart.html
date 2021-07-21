@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://code.jquery.com/jquery-1.7.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <style>
+        #container2{
+            width: 800px;
+            border: 3px solid blue;
+        }
+    </style>
+    <script>
+    function display1(data){
+           Highcharts.chart('container2', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'OTT플랫폼별 시청연령 영화 개수'
+                },
+                subtitle: {
+                    text: '각 플랫폼 별로 시청연령 영화가 몇 개씩 있는지 확인해보자'
+                },
+                xAxis: {
+                    type: 'category',
+                    labels: {
+                        rotation: -45,
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Movie Count'
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: '<b>{point.y} count</b>'
+                },
+                series: [{
+                    name: 'Population',
+                    colorByPoint: true,
+                    data: data,
+                    dataLabels: {
+                        enabled: true,
+                        rotation: 0,
+                        color: '#00000',
+                        align: 'center',
+                        format: '{point.y}',
+                        y: 5, // 10 pixels down from the top
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
+                }]
+            });
+    };
+//--------------------------------------------------------------------------------
+    function getdata(ott){
+        $.ajax({
+                url:'ages',
+                data:{ott:ott},
+                datatype:'JSON',
+                success:function(data){
+                    display1(data)},
+                error:function(){}
+        });
+    };
+
+    $(document).ready(function(){
+        $('#bt').click(function(){
+            ott = $('select[name="ott"]').val();
+            getdata(ott);
+        });
+    });
+
+
+
+    </script>
+</head>
+<body>
+<div class="container1">
+    <h1 class="h3 mb-2 text-gray-800">Chart</h1>
+    <select name="ott">
+        <option value="Netflix">Netflix</option>
+        <option value="Hulu">Hulu</option>
+        <option value="Prime Video">Prime Video</option>
+        <option value="Disney+">Disney+</option>
+    </select><br>
+    <button id="bt">SEARCH</button>
+</div>
+<div id="container2"></div>
+</body>
+</html>
