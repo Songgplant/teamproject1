@@ -8,24 +8,22 @@ class MyAnalysis:
         df = pd.read_csv(DATA_DIRS[0] + '/MoviesOnStreamingPlatforms_updated.csv')
         df.drop(['Unnamed: 0', 'ID'], axis=1, inplace=True)
         df['Age'].replace('all', '0+', inplace=True)
-        AgeList = [0 for _ in range(5)]
+        df = df.dropna(subset=["Age"])
+
+        setott = df[ott] == 1
+        x = df[setott]
+
+        age0count = len(x[x['Age'] == '0+'])
+        age7count = len(x[x['Age'] == '7+'])
+        age13count = len(x[x['Age'] == '13+'])
+        age16count = len(x[x['Age'] == '16+'])
+        age18count = len(x[x['Age'] == '18+'])
+
+        AgeList = [age0count, age7count, age13count, age16count, age18count]
         AgeRange = ['0+', '+7', '+13', '+16', '18+']
 
-        for i in range(len(df)):
-            if df.iloc[i][ott] == 1:
-                if df.iloc[i]['Age'] == '0+':
-                    AgeList[0] += 1
-                elif df.iloc[i]['Age'] == '7+':
-                    AgeList[1] += 1
-                elif df.iloc[i]['Age'] == '13+':
-                    AgeList[2] += 1
-                elif df.iloc[i]['Age'] == '16+':
-                    AgeList[3] += 1
-                elif df.iloc[i]['Age'] == '18+':
-                    AgeList[4] += 1
-                else:
-                    continue
         result = []
+
         for i in range(len(AgeRange)):
             d = []
             d.append(AgeRange[i])
