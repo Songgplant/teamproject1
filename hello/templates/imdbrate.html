@@ -44,11 +44,122 @@
             series: [{
                 name: 'IMDb',
                 colorByPoint: true,
+                innerSize: '40%',
                 data: data
             }]
         });
     };
-
+    function chart2(data){
+        Highcharts.chart('container2', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Hulu 플랫폼의 IMDB 지수 비율'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name} 점</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                name: 'IMDb',
+                colorByPoint: true,
+                innerSize: '40%',
+                data: data
+            }]
+        });
+    };
+    function chart3(data){
+        Highcharts.chart('container3', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Prime Video 플랫폼의 IMDB 지수 비율'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name} 점</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                name: 'IMDb',
+                colorByPoint: true,
+                innerSize: '40%',
+                data: data
+            }]
+        });
+    };
+    function chart4(data){
+        Highcharts.chart('container4', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Disney+ 플랫폼의 IMDB 지수 비율'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name} 점</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                name: 'IMDb',
+                colorByPoint: true,
+                innerSize: '40%',
+                data: data
+            }]
+        });
+    };
 //--------------------------------------------------------------------------------
 
     $(document).ready(function(){
@@ -58,6 +169,31 @@
             datatype:'JSON',
             success:function(data){
                 chart1(data);
+                $.ajax({
+                    url:'imrate',
+                    data:{'ott':'Hulu'},
+                    datatype:'JSON',
+                    success:function(data){
+                        chart2(data);
+                        $.ajax({
+                            url:'imrate',
+                            data:{'ott':'Prime Video'},
+                            datatype:'JSON',
+                            success:function(data){
+                                chart3(data);
+                                $.ajax({
+                                    url:'imrate',
+                                    data:{'ott':'Disney+'},
+                                    datatype:'JSON',
+                                    success:function(data){
+                                        chart4(data);
+                                    }
+                                });
+
+                            }
+                        });
+                    }
+                });
             }
         });
     });
