@@ -10,15 +10,20 @@ from analysis.MyAnalysis import MyAnalysis
 def home(request):
     return render(request, 'home.html')
 
+
 def ages(request):
     ott = request.GET['ott']
     result = MyAnalysis().forage(ott)
     return HttpResponse(json.dumps(result), content_type='application/json')
 
-def sp(request) :
+
+def sp(request):
     ott = request.GET['ott']
-    # feature = request.GET['feature']
-    # # print(feature)
     result = MyAnalysis().ImdbScatter(ott)
-    print("result 성공")
+    return HttpResponse(json.dumps(result), content_type='application/json')
+
+
+def imrate(request):
+    ott = request.GET['ott']
+    result = MyAnalysis().ImdbRate(ott)
     return HttpResponse(json.dumps(result), content_type='application/json')

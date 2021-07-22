@@ -24,5 +24,9 @@ urlpatterns = [
     path('AgeChart', TemplateView.as_view(template_name='AgeChart.html'), name='AgeChart'),
     path('ages', views.ages, name='ages'),
     path('ScatterPlot', TemplateView.as_view(template_name='ScatterPlot.html'), name='ScatterPlot'),
-    path('sp', views.sp, name='sp')
+    path('sp', views.sp, name='sp'),
+
+    # 추가 기능 구현 0722
+    path('imrate', views.imrate, name='imrate'),
+    path('imdbrate', TemplateView.as_view(template_name='imdbrate.html'), name='imdbrate')
 ]

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://code.jquery.com/jquery-1.7.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <style>
+
+    </style>
+    <script>
+    function chart1(data){
+        Highcharts.chart('container1', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Netflix 플랫폼의 IMDB 지수 비율'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name} 점</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                name: 'IMDb',
+                colorByPoint: true,
+                data: data
+            }]
+        });
+    };
+
+//--------------------------------------------------------------------------------
+
+    $(document).ready(function(){
+        $.ajax({
+            url:'imrate',
+            data:{'ott':'Netflix'},
+            datatype:'JSON',
+            success:function(data){
+                chart1(data);
+            }
+        });
+    });
+    </script>
+</head>
+<body>
+<div id="container1"></div>
+<div id="container2"></div>
+<div id="container3"></div>
+<div id="container4"></div>
+</body>
+</html>

@@ -58,7 +58,36 @@ class MyAnalysis:
         print(result)
         return result
 
+    def ImdbRate(self, ott):
+        df = pd.read_csv(DATA_DIRS[0] + '/MoviesOnStreamingPlatforms_updated.csv')
+        df.drop(['Unnamed: 0', 'ID'], axis=1, inplace=True)
+        x = df[df[ott] == 1]
+        newdf = x.dropna(subset=["IMDb"])
+
+        im1 = newdf[newdf['IMDb'] < 5]
+        im2 = newdf[(newdf['IMDb'] >= 5) & (newdf['IMDb'] < 6)]
+        im3 = newdf[(newdf['IMDb'] >= 6) & (newdf['IMDb'] < 7)]
+        im4 = newdf[(newdf['IMDb'] >= 7) & (newdf['IMDb'] < 8)]
+        im5 = newdf[(newdf['IMDb'] >= 8) & (newdf['IMDb'] < 9)]
+        im6 = newdf[(newdf['IMDb'] >= 9) & (newdf['IMDb'] <= 10)]
+
+        data = [{
+            'name': '0.0~4.9', 'y': len(im1) / len(newdf) * 100
+        }, {
+            'name': '5.0~5.9', 'y': len(im2) / len(newdf) * 100
+        }, {
+            'name': '6.0~6.9', 'y': len(im3) / len(newdf) * 100
+        }, {
+            'name': '7.0~7.9', 'y': len(im4) / len(newdf) * 100
+        }, {
+            'name': '8.0~8.9', 'y': len(im5) / len(newdf) * 100
+        }, {
+            'name': '9.0~10.0', 'y': len(im6) / len(newdf) * 100
+        }]
+        return data
+
 
 if __name__ == '__main__':
     # MyAnalysis().forage('Netflix')
-    MyAnalysis().ImdbScatter('Disney+')
+    # MyAnalysis().ImdbScatter('Disney+')
+    MyAnalysis().ImdbRate('Netflix')

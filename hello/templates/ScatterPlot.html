@@ -89,14 +89,13 @@
             success:function(data){
                 display1(data)},
             error:function(){
-                 alert("getdata실패")}
+                 alert("Fail : getdata")}
         });
     };
 
     $(document).ready(function(){
         $('#bt').click(function(){
             ott = $('select[name="ott"]').val();
-            alert("값입력성공");
             getdata(ott);
         });
     });
